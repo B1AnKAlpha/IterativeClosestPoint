@@ -5,6 +5,9 @@
 *.o
 *.obj
 
+# icp原始文件夹（Eigen已复制到主目录）
+icp/
+
 # CMake构建文件
 build/
 CMakeFiles/
