@@ -1,0 +1,51 @@
+# 编译生成的可执行文件
+*.exe
+*.out
+*.app
+*.o
+*.obj
+
+# CMake构建文件
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# 点云文件（体积较大，不上传到GitHub）
+*.las
+*.laz
+*.pcd
+*.ply
+*.xyz
+
+# 输出结果文件
+registered_*.las
+sampled_*.las
+icp_transformation.txt
+test_source_transformed.las
+
+# IDE配置文件
+.vscode/
+.vs/
+.idea/
+*.suo
+*.user
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# 临时文件
+*.tmp
+*.bak
+*.swp
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 日志文件
+*.log
