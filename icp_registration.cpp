@@ -442,7 +442,8 @@ Eigen::Matrix4d best_fit_transform(const Eigen::MatrixXd &A, const Eigen::Matrix
 // ICP算法主函数(使用八叉树优化 + SVD标准实现)
 void ICP(PointCloud& source, const PointCloud& target,
          int max_iterations, double tolerance,
-         double final_R[3][3], double final_t[3]) {
+         double final_R[3][3], double final_t[3],
+         vector<Eigen::Matrix4d>* iteration_transforms = nullptr) {
     
     cout << "\n开始ICP精匹配..." << endl;
     cout << "源点云: " << source.size() << " 个点" << endl;
@@ -469,6 +470,7 @@ void ICP(PointCloud& source, const PointCloud& target,
     }
     
     Eigen::Matrix4d T = Eigen::MatrixXd::Identity(4, 4);
+    Eigen::Matrix4d T_cumulative = Eigen::MatrixXd::Identity(4, 4);  // 累积变换
     double prev_error = 1e10;
     int no_improvement_count = 0;
     
@@ -584,6 +586,14 @@ void ICP(PointCloud& source, const PointCloud& target,
         
         T = best_fit_transform(src_valid.transpose(), dst_valid.transpose());
         
+        // 累积变换矩阵
+        T_cumulative = T * T_cumulative;
+        
+        // 保存每次迭代的累积变换
+        if (iteration_transforms != nullptr) {
+            iteration_transforms->push_back(T_cumulative);
+        }
+        
         // 步骤5: 应用变换到源点云
         src = T * src;
         for (int i = 0; i < row; i++) {
@@ -612,7 +622,8 @@ void ICP(PointCloud& source, const PointCloud& target,
 }
 
 // 保存变换参数到文件
-void saveTransformation(double R[3][3], double t[3], const string& filename) {
+void saveTransformation(double R[3][3], double t[3], const string& filename, 
+                       const vector<Eigen::Matrix4d>* iteration_transforms = nullptr) {
     ofstream file(filename);
     if (!file.is_open()) {
         cerr << "无法创建变换参数文件: " << filename << endl;
@@ -624,6 +635,36 @@ void saveTransformation(double R[3][3], double t[3], const string& filename) {
     
     file << "说明: 将源点云变换到目标点云坐标系下的变换矩阵" << endl;
     file << "变换公式: P_target = R * P_source + t" << endl << endl;
+    
+    // 保存每次迭代的变换参数
+    if (iteration_transforms != nullptr && !iteration_transforms->empty()) {
+        file << "==================" << endl;
+        file << "迭代过程变换参数" << endl;
+        file << "==================" << endl << endl;
+        file.precision(10);
+        
+        for (size_t iter = 0; iter < iteration_transforms->size(); iter++) {
+            const Eigen::Matrix4d& T = (*iteration_transforms)[iter];
+            file << "--- 迭代 " << (iter + 1) << " ---" << endl;
+            file << "旋转矩阵 R:" << endl;
+            for (int i = 0; i < 3; i++) {
+                file << "  [";
+                for (int j = 0; j < 3; j++) {
+                    file << T(i, j);
+                    if (j < 2) file << ", ";
+                }
+                file << "]" << endl;
+            }
+            file << "平移向量 t:" << endl;
+            file << "  [" << T(0, 3) << ", " << T(1, 3) << ", " << T(2, 3) << "]" << endl;
+            file << endl;
+        }
+        file << endl;
+    }
+    
+    file << "==================" << endl;
+    file << "最终变换参数" << endl;
+    file << "==================" << endl << endl;
     
     file << "旋转矩阵 R (3x3):" << endl;
     file.precision(10);
@@ -781,7 +822,7 @@ int main() {
     // 读取两个LAS文件
     PointCloud source_cloud, target_cloud;
     
-    string source_file = "Scannew_096.las";
+    string source_file = "Scan_096_origin.las";
     string target_file = "Scannew_099.las";
     
     cout << "\n读取源点云: " << source_file << endl;
@@ -862,12 +903,13 @@ int main() {
     
     cout << "\n配准参数: 最大迭代次数=" << max_iters << ", 收敛阈值=" << tolerance << endl;
     
-    // 用于存储变换参数
+    // 用于存储变换参数和迭代过程
     double final_R[3][3], final_t[3];
+    vector<Eigen::Matrix4d> iteration_transforms;
     
     cout << "\n说明: ICP算法将 源点云(096) 配准到 目标点云(099)" << endl;
     
-    ICP(source_sampled, target_sampled, max_iters, tolerance, final_R, final_t);
+    ICP(source_sampled, target_sampled, max_iters, tolerance, final_R, final_t, &iteration_transforms);
     
     // 输出变换参数
     cout << "\n========== 配准变换参数 ==========" << endl;
@@ -889,14 +931,14 @@ int main() {
     saveResultAsLAS(source_sampled, "registered_source.las");
     saveResultAsLAS(target_sampled, "registered_target.las");
     
-    // 保存变换参数
-    saveTransformation(final_R, final_t, "icp_transformation.txt");
+    // 保存变换参数（包含迭代过程）
+    saveTransformation(final_R, final_t, "icp_transformation.txt", &iteration_transforms);
     
     cout << "\n配准完成!" << endl;
     cout << "已生成文件:" << endl;
     cout << "  - registered_source.las (配准后的源点云)" << endl;
     cout << "  - registered_target.las (目标点云参考)" << endl;
-    cout << "  - icp_transformation.txt (变换参数)" << endl;
+    cout << "  - icp_transformation.txt (变换参数，含每次迭代)" << endl;
     
     cout << "\n请按回车键退出..." << endl;
     cin.clear();

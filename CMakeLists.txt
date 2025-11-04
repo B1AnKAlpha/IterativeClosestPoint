@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
 
-# 设置项目名称
+# 锟斤拷锟斤拷锟斤拷目锟斤拷锟斤拷
 project(PhotoProcessing)
 
-# 设置 C++ 标准
+# 锟斤拷锟斤拷 C++ 锟斤拷准
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# 添加可执行文件
-add_executable(test_las test_las.cpp)
+# 锟斤拷锟接匡拷执锟斤拷锟侥硷拷
+add_executable(test_icp test_icp.cpp)
 add_executable(icp_registration icp_registration.cpp)

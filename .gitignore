@@ -8,6 +8,13 @@
 # icp原始文件夹（Eigen已复制到主目录）
 icp/
 
+# FARO扫描文件夹（体积大，原始数据）
+Scan_096.fls/
+Scan_099.fls/
+
+# cip文件夹
+cip/
+
 # CMake构建文件
 build/
 CMakeFiles/
