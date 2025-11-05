@@ -12,8 +12,6 @@ icp/
 Scan_096.fls/
 Scan_099.fls/
 
-# cip文件夹
-cip/
 
 # CMake构建文件
 build/

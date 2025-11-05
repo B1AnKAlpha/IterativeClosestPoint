@@ -899,7 +899,7 @@ int main() {
     
     // 执行ICP配准
     int max_iters = 20;  // 迭代次数
-    double tolerance = 1e-5;  // 收敛阈值
+    double tolerance = 1e-2;  // 收敛阈值
     
     cout << "\n配准参数: 最大迭代次数=" << max_iters << ", 收敛阈值=" << tolerance << endl;
     
