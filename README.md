@@ -105,7 +105,7 @@ QColor targetColor = Qt::blue;    // 目标点云颜色
 
 ## 依赖项说明
 
-### ElaWidgetTools
+### [ElaWidgetTools](https://github.com/Liniyous/ElaWidgetTools)
 
 - **用途**：提供Material Design风格的UI组件
 - **许可证**：MIT License（已包含在项目中）
@@ -121,9 +121,10 @@ QColor targetColor = Qt::blue;    // 目标点云颜色
 
 ## 致谢
 
-- Eigen团队提供的优秀线性代数库
-- ElaWidgetTools作者提供的UI组件
-- Qt框架提供的跨平台开发支持
+- [Eigen](https://eigen.tuxfamily.org/) 团队提供的优秀线性代数库
+- [ElaWidgetTools](https://github.com/Liniyous/ElaWidgetTools) 作者提供的UI组件
+- [ShowLasFile](https://gitcode.com/Universal-Tool/f66bf) 提供的LAS文件读取参考
+- [Qt](https://www.qt.io/) 框架提供的跨平台开发支持
 
 ---
 
