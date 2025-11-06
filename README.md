@@ -11,6 +11,37 @@
 
 这是一个基于Qt框架开发的ICP(Iterative Closest Point)点云配准系统，提供完整的图形界面和3D可视化功能。支持LAS格式点云文件的导入、配准和结果可视化。
 
+## 界面展示
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="Pictures/Overview.png" width="100%" />
+        <br />
+        <b>概览页面</b>
+      </td>
+      <td align="center">
+        <img src="Pictures/Manager.png" width="100%" />
+        <br />
+        <b>数据管理</b>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="Pictures/Console.png" width="100%" />
+        <br />
+        <b>配准控制台</b> 
+      </td>
+      <td align="center">
+        <img src="Pictures/3D.png" width="100%" />
+        <br />
+        <b>3D可视化</b>
+      </td>
+    </tr>
+  </table>
+</div>
+
 ## 项目结构
 
 ```
@@ -105,7 +136,7 @@ QColor targetColor = Qt::blue;    // 目标点云颜色
 
 ## 依赖项说明
 
-### [ElaWidgetTools](https://github.com/Liniyous/ElaWidgetTools)
+### ElaWidgetTools
 
 - **用途**：提供Material Design风格的UI组件
 - **许可证**：MIT License（已包含在项目中）
