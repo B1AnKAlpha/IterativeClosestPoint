@@ -89,27 +89,6 @@ cmake ..
 cmake --build .
 ```
 
-## 运行示例
-
-### Qt可视化版本
-直接运行程序，通过图形界面操作：
-- 数据管理页面导入点云
-- 配准页面设置参数并执行
-- 可视化页面查看结果和迭代过程
-
-### 命令行版本
-```bash
-# ICP点云配准（源点云 目标点云）
-./icp_registration.exe source.las target.las
-
-# 测试程序
-./test_icp.exe
-```
-
-### 输出文件
-
-- `registered_source.las`：配准后的源点云
-- `icp_transformation.txt`：变换参数（旋转矩阵R和平移向量t）
 
 
 
