@@ -10,6 +10,10 @@ Code/
 icp/
 external/
 ShowLasFile/
+Release_Package/
+
+# 发布压缩包
+*.zip
 
 # FARO扫描文件夹（体积大，原始数据）
 Scan_096.fls/
@@ -49,6 +53,7 @@ test_source_transformed.las
 .vscode/
 .vs/
 .idea/
+.cache/
 *.suo
 *.user
 *.sln
