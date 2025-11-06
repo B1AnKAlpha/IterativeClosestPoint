@@ -5,8 +5,11 @@
 *.o
 *.obj
 
-# icp原始文件夹（Eigen已复制到主目录）
+# 不需要上传的文件夹
+Code/
 icp/
+external/
+ShowLasFile/
 
 # FARO扫描文件夹（体积大，原始数据）
 Scan_096.fls/
@@ -20,6 +23,14 @@ CMakeCache.txt
 cmake_install.cmake
 Makefile
 compile_commands.json
+
+# Qt构建文件
+*build*/
+*.pro.user
+*.autosave
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
 
 # 点云文件（体积较大，不上传到GitHub）
 *.las
