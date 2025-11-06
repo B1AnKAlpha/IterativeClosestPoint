@@ -14,69 +14,71 @@
 ## 项目结构
 
 ```
-PointCloudRegistration/        # Qt可视化应用程序
-├── core/                      # 核心算法（ICP引擎、LAS文件读写）
-├── services/                  # 业务逻辑（配准服务、设置服务）
-├── ui/                        # 用户界面（主窗口、各功能页面）
-├── widgets/                   # 自定义控件（3D点云查看器）
-└── CMakeLists.txt
-
-ElaWidgetTools/                # UI组件库
-icp/                           # ICP算法实现和Eigen库
-```
-
-## 运行示例
-
-```bash
-# ICP点云配准（源点云 目标点云）
-
-├── ElaWidgetTools/              # UI组件库（第三方）./icp_registration.exe source.las target.las
-
-├── icp/                         # ICP算法核心实现
-
-│   ├── icp.h/cpp               # ICP算法# 测试程序
-
-│   └── Eigen/                  # Eigen线性代数库./test_icp.exe
-
-└── README.md```
-
+├── PointCloudRegistration/    # Qt可视化应用程序
+│   ├── core/                  # 核心算法（ICP引擎、LAS文件读写）
+│   ├── services/              # 业务逻辑（配准服务、设置服务）
+│   ├── ui/                    # 用户界面（主窗口、各功能页面）
+│   ├── widgets/               # 自定义控件（3D点云查看器）
+│   └── CMakeLists.txt
+├── ElaWidgetTools/            # UI组件库
+├── Eigen/                     # Eigen线性代数库
+├── icp_registration.cpp       # 命令行版ICP配准程序
+├── test_icp.cpp               # ICP算法测试程序
+├── CMakeLists.txt             # 项目构建配置
+└── README.md
 ```
 
 ## 编译方法
 
-### 方法1: 使用Qt Creator（推荐）
+### 方法1: Qt可视化版本（推荐）
 
-
-
+使用Qt Creator：
 1. 打开Qt Creator
-
 2. 选择 `文件` → `打开文件或项目`
-
-3. 选择 `PointCloudRegistration/CMakeLists.txt`---
-
+3. 选择 `PointCloudRegistration/CMakeLists.txt`
 4. 配置构建套件（选择Qt 6.8.3 MinGW 64-bit）
-
 5. 点击左下角的 `▶️ 运行` 按钮
 
-### 方法2: 使用CMake命令行
-
+或使用CMake命令行：
 ```bash
 cd PointCloudRegistration
 mkdir build
 cd build
 cmake ..
 cmake --build . --config Release
+./Release/PointCloudRegistration.exe  # Windows
 ```
 
-Windows运行：
-```powershell
-.\Release\PointCloudRegistration.exe
-```
+### 方法2: 命令行版本
 
-Linux/macOS运行：
 ```bash
-./PointCloudRegistration
+mkdir build
+cd build
+cmake ..
+cmake --build .
 ```
+
+## 运行示例
+
+### Qt可视化版本
+直接运行程序，通过图形界面操作：
+- 数据管理页面导入点云
+- 配准页面设置参数并执行
+- 可视化页面查看结果和迭代过程
+
+### 命令行版本
+```bash
+# ICP点云配准（源点云 目标点云）
+./icp_registration.exe source.las target.las
+
+# 测试程序
+./test_icp.exe
+```
+
+### 输出文件
+
+- `registered_source.las`：配准后的源点云
+- `icp_transformation.txt`：变换参数（旋转矩阵R和平移向量t）
 
 
 
