@@ -11,53 +11,24 @@
 
 这是一个基于Qt框架开发的ICP(Iterative Closest Point)点云配准系统，提供完整的图形界面和3D可视化功能。支持LAS格式点云文件的导入、配准和结果可视化。
 
-这是一个使用C++实现的ICP(Iterative Closest Point)算法，用于对两个LAS格式的点云文件进行精确配准。
-
 ## 项目结构
 
+```
+PointCloudRegistration/        # Qt可视化应用程序
+├── core/                      # 核心算法（ICP引擎、LAS文件读写）
+├── services/                  # 业务逻辑（配准服务、设置服务）
+├── ui/                        # 用户界面（主窗口、各功能页面）
+├── widgets/                   # 自定义控件（3D点云查看器）
+└── CMakeLists.txt
 
-
+ElaWidgetTools/                # UI组件库
+icp/                           # ICP算法实现和Eigen库
 ```
 
-Photo/
+## 运行示例
 
-├── PointCloudRegistration/      # Qt可视化应用程序├── icp_registration.cpp    # ICP配准主程序```bash
-
-│   ├── core/                    # 核心算法模块
-
-│   │   ├── icpengine.h/cpp     # ICP配准引擎├── test_icp.cpp           # ICP算法测试程序mkdir build
-
-│   │   ├── lasio.h/cpp         # LAS文件读写
-
-│   │   └── pointcloud.h        # 点云数据结构├── Eigen/                 # Eigen线性代数库cd build
-
-│   ├── services/                # 业务逻辑层
-
-│   │   ├── registrationservice.h/cpp  # 配准服务├── README.md              # 项目说明文档cmake ..
-
-│   │   └── settingsservice.h/cpp      # 设置服务
-
-│   ├── ui/                      # 用户界面└── .gitignore            # Git忽略配置cmake --build .
-
-│   │   ├── pages/              # 各功能页面
-
-│   │   │   ├── dashboardpage.cpp      # 概览页``````
-
-│   │   │   ├── datamanagerpage.cpp    # 数据管理页
-
-│   │   │   ├── registrationpage.cpp   # 配准操作页
-
-│   │   │   ├── visualizationpage.cpp  # 3D可视化页
-
-│   │   │   └── settingspage.cpp       # 设置页
-
-│   │   └── mainwindow.h/cpp    # 主窗口## 运行示例
-
-│   ├── widgets/                 # 自定义控件
-
-│   │   └── pointcloudviewer.h/cpp  # 3D点云查看器```bash
-
-│   └── CMakeLists.txt# ICP点云配准（源点云 目标点云）
+```bash
+# ICP点云配准（源点云 目标点云）
 
 ├── ElaWidgetTools/              # UI组件库（第三方）./icp_registration.exe source.las target.las
 
@@ -128,19 +99,6 @@ QColor sourceColor = Qt::red;     // 源点云颜色
 QColor targetColor = Qt::blue;    // 目标点云颜色
 ```
 
-
-### 测试数据
-
-项目包含两个测试点云文件：
-- `Scannew_096.las`：源点云
-- `Scannew_099.las`：目标点云
-
-### 预期结果
-
-配准成功后：
-- RMSE < 0.01（具体取决于点云质量）
-- 迭代次数：10-30次
-- 处理时间：数秒到数分钟（取决于点云大小）
 
 
 ## 依赖项说明
